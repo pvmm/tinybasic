@@ -1,3 +1,5 @@
+⚠️ Important: This repository is frozen since it's only here for the purpose of preservation. If you want to use the code to do a Z-80 home computer version, I suggest you look at this effort here: https://github.com/pvmm/msx-tinybasic
+
 Tiny BASIC
 ==========
 

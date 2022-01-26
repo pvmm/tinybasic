@@ -332,7 +332,7 @@ F138 C31AF1      1899        JMP  RUNTSL       GO DO IT
 * THE LIST IS A NULL LIST.  HOWEVER IF THE LIST ENDED WITH A COMMA, NO
 * (CRLF) IS GENERATED.
 *
-F138 CDCFF5      1935 LIST   CALL TSTNUM       TEST IF THERE IS A #
+F13B CDCFF5      1935 LIST   CALL TSTNUM       TEST IF THERE IS A #
 F13E E5          1937        PUSH H
 F13F 21FFFF      1939        LXI  H,0FFFFH
 F142 CDBBF5      1941        TSTC ',',LS1
@@ -541,7 +541,7 @@ F289 C372F2      2283        JMP  NX1          GO CHECK AGAIN
 F28C 5E          2285 NX2    MOV  E,H          COME HERE WHEN AGREED
 F28D 23          2287        INX  H
 F28E 56          2289        MOV  D,M          DE=VALUE OF VAR.
-F28F 2ABF00      2291        LHLD LOPING
+F28F 2ABF00      2291        LHLD LOPINC
 F292 E5          2293        PUSH H
 F293 7C          2295        MOV  A,H
 F294 AA          2297        XRA  D            S=SIGN DIFFER
@@ -618,7 +618,7 @@ F2D8 CD7FF5      2403        CALL FNDSKP       YES, SKIP REST OF LINE
 F2DB D21AF1      2405        JNC  RUNTSL       AND RUN THE NEXT LINE
 F2DE C353F0      2407        JMP  RSTART       IF NO NEXT, RE-START
 *
-F2E1 2ABB00      2410 INPERR LHLD STKNP        *** INPERR ***
+F2E1 2ABB00      2410 INPERR LHLD STKINP       *** INPERR ***
 F2E4 F9          2412        SPHL ,            RESTORE OLD SP
 F2E5 E1          2414        POP  H            AND OLD 'CURRNT'
 F2E6 22B700      2416        SHLD CURRNT
@@ -717,7 +717,7 @@ F36E C8          2571        RZ   ,            FALSE, RETURN HL=0
 F36F 6F          2573        MOV  L,A          TRUE, RETURN HL=1
 F370 C9          2575        RET  ,
 F371 CD8EF3      2577 XPR3   CALL XPR8         REL.OP.">"
-F374 C8          2579 XPR3   RZ   ,            FALSE
+F374 C8          2579        RZ   ,            FALSE
 F375 D8          2581        RC   ,            ALSO FALSE, HL=0
 F376 6F          2583        MOV  L,A          TRUE, HL=1
 F377 C9          2585        RET  ,
@@ -977,13 +977,13 @@ F4E8 EB          3042        XCHG ,            NO, XCH AND COMP
 F4E9 CDEDF4      3044 CK1    CALL COMP
 F4EC C9          3046        RET  ,
 *
-F4ED 7C          3049 COMP  MOV   A,H          *** COMP ***
-F4EE BA          3051       CMP   D            COMPARE HL WITH DE
-F4EF C0          3053       RNZ   ,            RETURN CORRECT C AND
-F4F0 7D          3055       MOV   A,L          Z FLAGS
-F4F1 BB          3057       CMP   E            BUT OLD A IS LOST
+F4ED 7C          3049 COMP   MOV  A,H          *** COMP ***
+F4EE BA          3051        CMP  D            COMPARE HL WITH DE
+F4EF C0          3053        RNZ  ,            RETURN CORRECT C AND
+F4F0 7D          3055        MOV  A,L          Z FLAGS
+F4F1 BB          3057        CMP  E            BUT OLD A IS LOST
 
-F4F2 C9          3059       RET   ,
+F4F2 C9          3059        RET  ,
 *
 **********************************************************************
 *
@@ -1243,7 +1243,7 @@ F607 03          3484        INX  B
 F608 C300F6      3486        JMP  MVUP         UNTIL DONE
 *
 F60B 78          3489 MVDOWN MOV  A,B          *** MVDOWN ***
-F60C 92          3491        SUB  D            TEST IF DE =  BC
+F60C 92          3491        SUB  D            TEST IF DE = BC
 F60D C213F6      3493        JNZ  MD1          NO, GO MOVE
 F610 79          3495        MOV  A,C          MAYBE, OTHER BYTE?
 F611 93          3497        SUB  E
@@ -1255,7 +1255,7 @@ F616 77          3507        MOV  M,A          THEN DO IT
 F617 C30BF6      3509        JMP  MVDOWN       LOOP BACK
 *
 F61A C1          3512 POPA   POP  B            BC = RETURN ADDR.
-F61B E1          3514        POP  H            RESTORE LOPVAR , BUT
+F61B E1          3514        POP  H            RESTORE LOPVAR, BUT
 F61C 22BD00      3516        SHLD LOPVAR       =0 MEANS NO MORE
 F61F 7C          3518        MOV  A,H
 F620 B5          3520        ORA  L
@@ -1327,7 +1327,7 @@ F667 1A          3624 PS2    LDAX D            GET A CHARACTER
 F668 13          3626        INX  D            BUMP POINTER
 F669 B8          3628        CMP  B            SAME AS OLD A?
 F66A B8          3630        RZ   ,            YES, RETURN
-F66B CD95F7      3632        CALL CUTCH        ELSE PRINT IT
+F66B CD95F7      3632        CALL OUTCH        ELSE PRINT IT
 F66E FE0D        3634        CPI  @CR          WAS IT A CR?
 F670 C267F6      3636        JNZ  PS2          NO, NEXT
 F673 C9          3638        RET  ,            YES, RETURN
@@ -1393,7 +1393,7 @@ F6D0 C1          3746 PN6    POP  B            WE GOT ALL DIGITS IN
 F6D1 0D          3748 PN7    DCR  C            THE STACK
 F6D2 79          3750        MOV  A,C          LOOK AT SPACE COUNT
 F6D3 B7          3752        ORA  A
-F6D4 FADFF6      3754        JM   PNB          NO LEADING BLANKS
+F6D4 FADFF6      3754        JM   PN8          NO LEADING BLANKS
 F6D7 3E20        3756        MVI  A,' '        LEADING BLANKS
 F6D9 CD95F7      3758        CALL OUTCH
 F6DC C3D1F6      3760        JMP  PN7          MORE?
@@ -1546,7 +1546,7 @@ F7BA C39EF7      3971        JMP  GL1
 F7BD FE0D        3973 GL4    CPI  @CR          WAS IT CR?
 F7BF CACDF7      3975        JZ   GL5          YES, END THE LINE
 F7C2 7B          3977        MOV  A,E          ELSE, MORE FREE ROOM?
-F7C3 FE4E        3979        CPI  BUFFEND,>
+F7C3 FE4E        3979        CPI  BUFEND,>
 F7C5 CAA1F7      3981        JZ   GL2          NO, WAIT FOR CR/RUB-OUT
 F7C8 1A          3983        LDAX D            YES, BUMP POINTER 
 F7C9 13          3985        INX  D

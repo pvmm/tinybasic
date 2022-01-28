@@ -227,10 +227,10 @@ F0F2 23          1790 EX4    INX   H           JUMP ADDR., WHICH IS
 F0F3 BE	         1792        CMP   M           FLAGGED BY BIT 7
 F0F4 D2F270      1794        JNC   EX4
 F0F7 7E          1796 EX5    MOV   A,M         LOAD HL WITH THE JUMP
-F0F9 6E          1798        INX   H           ADDRESS FROM THE TABLE
-F0FA E6FF        1800        MOV   L,M        ******************
-F0FC 67          1802        ANI   0FFH      ***** ANI 07FH *****
-F0FD F1          1804        MOV   H,A        ******************
+F0F9 23          1798        INX   H           ADDRESS FROM THE TABLE
+F0FA 6E          1800        MOV   L,M        ******************
+F0FC E6FF        1802        ANI   0FFH      ***** ANI 07FH *****
+F0FD 67          1804        MOV   H,A        ******************
 F0FD F1          1806        POP   PSW         CLEAN UP THE GARBAGE
 F0FE E9          1808        PCHL  ,           AND WE GO DO IT
 *
@@ -1032,7 +1032,7 @@ F508 C9          3117        RET  ,
 F509 CD0FF5      3120 FINISH CALL FIN          CHECK END OF COMMAND
 F50C C330F5      3122 SV1    JMP  QWHAT        PRINT "WHAT?" IF WRONG
 *
-F50F CDBBF5      3125 FIN    TSTC ';',F11      *** FIN ***
+F50F CDBBF5      3125 FIN    TSTC ';',FI1      *** FIN ***
 F512 3B          3127
 F513 04          3128
 F514 F1          3129        POP  PSW          ";", PURGE RET ADDR.
